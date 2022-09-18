@@ -5,6 +5,7 @@ import 'package:my_profile_app/utils/user_preferences.dart';
 import 'package:my_profile_app/widgets/profile_widget.dart';
 import 'package:my_profile_app/widgets/button_widget.dart';
 import 'package:my_profile_app/widgets/numbers_widget.dart';
+import 'package:my_profile_app/widgets/icon_button_widget.dart';
 import 'package:my_profile_app/models/user.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 24),
           buildName(user),
           const SizedBox(height: 24),
-          Center(child: buildUpgradeButton()),
+          Center(child: buildInstagramButton()),
           const SizedBox(height: 24),
           NumbersWidget(),
           const SizedBox(height: 48),
@@ -51,6 +52,11 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(color: Colors.grey),
           ),
         ],
+      );
+
+  Widget buildInstagramButton() => IconButtonWidget(
+        logoPath: 'assets/logos/insta.png',
+        onClicked: () {},
       );
 
   Widget buildUpgradeButton() => ButtonWidget(

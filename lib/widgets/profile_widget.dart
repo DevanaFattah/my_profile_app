@@ -26,7 +26,7 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
+    final image = AssetImage('assets/images/saya.jpg');
 
     return ClipOval(
       child: Material(
