@@ -14,19 +14,27 @@ class ProfileWidget extends StatelessWidget {
 
     return Center(
         child: Stack(
-      children: [
-        buildImage(),
-        Positioned(
-          bottom: 0,
-          right: 4,
-          child: buildEditIcon(color),
-        ),
-      ],
+          children: <Widget>[
+            Center(
+              child: 
+                Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    buildImage('assets/images/saya.jpg'),
+                    Positioned(
+                      bottom: 0,
+                      right: 4,
+                      child: buildEditIcon(color),
+                    ),
+                  ],
+                ),
+            ),
+          ],
     ));
   }
 
-  Widget buildImage() {
-    final image = AssetImage('assets/images/saya.jpg');
+  Widget buildImage(String path) {
+    final image = AssetImage(path);
 
     return ClipOval(
       child: Material(

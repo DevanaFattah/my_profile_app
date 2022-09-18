@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IconButtonWidget extends StatelessWidget {
-  final String logoPath;
+  final IconData icon;
   final VoidCallback onClicked;
 
   const IconButtonWidget({
     Key? key,
-    required this.logoPath,
+    required this.icon,
     required this.onClicked
   }) : super(key: key);
 
@@ -18,6 +18,8 @@ class IconButtonWidget extends StatelessWidget {
             shape: CircleBorder(),
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 40)),
         onPressed: onClicked,
-        child: Image.asset(logoPath)
+        child: Icon(
+          icon,
+        ),
       );
 }
