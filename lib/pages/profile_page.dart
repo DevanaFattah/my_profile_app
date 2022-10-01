@@ -9,6 +9,7 @@ import 'package:my_profile_app/widgets/numbers_widget.dart';
 import 'package:my_profile_app/widgets/icon_button_widget.dart';
 import 'package:my_profile_app/widgets/cover_image_widget.dart';
 import 'package:my_profile_app/models/user.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -25,29 +26,27 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          Stack(
-            clipBehavior: Clip.none,
+          Column(
             children: [
               CoverImage(),
-              Positioned(
-                bottom: -75,
-                right: 180,
+              Transform.translate(
+                offset: const Offset(0, -50),
                 child: ProfileWidget(
-                  imagePath: user.imagePath,
-                  onClicked: () async {},
-                ),
+                    imagePath: '',
+                    onClicked: () async {
+                      print('jalan');
+                    }),
               ),
             ],
           ),
-          const SizedBox(height: 105),
           buildName(user),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              buildSocialButton(FontAwesomeIcons.instagram),
-              buildSocialButton(FontAwesomeIcons.github),
-              buildSocialButton(FontAwesomeIcons.facebook),
+              buildSocialButton(FontAwesomeIcons.instagram, user.instagramUrl),
+              buildSocialButton(FontAwesomeIcons.github, user.githubUrl),
+              buildSocialButton(FontAwesomeIcons.facebook, user.facebookUrl),
             ],
           ),
           const SizedBox(height: 24),
@@ -73,9 +72,19 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       );
 
-  Widget buildSocialButton(IconData icon) => IconButtonWidget(
+  Widget buildSocialButton(IconData icon, String url) => IconButtonWidget(
         icon: icon,
-        onClicked: () {},
+        url: Uri.parse(url),
+        onClicked: () async {
+          final Uri uri = Uri.parse(url);
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(
+              uri,
+              mode: LaunchMode.externalNonBrowserApplication,
+              webViewConfiguration: const WebViewConfiguration(),
+            );
+          }
+        },
       );
 
   Widget buildUpgradeButton() => ButtonWidget(

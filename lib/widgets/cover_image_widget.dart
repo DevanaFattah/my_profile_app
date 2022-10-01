@@ -8,12 +8,11 @@ class CoverImage extends StatelessWidget {
         color: Colors.blue.shade300,
         child: Stack(
           children: <Widget>[
-            Image.asset(
-              'assets/images/beach.jpg',
-              width: double.infinity,
-              height: coverHeight,
-              fit: BoxFit.cover
-            ),
+            Image.asset('assets/images/beach.jpg',
+                width: double.infinity, 
+                height: coverHeight, 
+                fit: BoxFit.cover
+              ),
           ],
         ),
       );

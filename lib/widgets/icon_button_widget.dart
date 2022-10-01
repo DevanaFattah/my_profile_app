@@ -4,11 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class IconButtonWidget extends StatelessWidget {
   final IconData icon;
   final VoidCallback onClicked;
+  final Uri url;
 
   const IconButtonWidget({
     Key? key,
     required this.icon,
-    required this.onClicked
+    required this.onClicked,
+    required this.url,
   }) : super(key: key);
 
   @override
