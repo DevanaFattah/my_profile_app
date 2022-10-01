@@ -33,9 +33,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 offset: const Offset(0, -50),
                 child: ProfileWidget(
                     imagePath: '',
-                    onClicked: () async {
-                      print('jalan');
-                    }),
+                    onClicked: () async {}
+                  ),
               ),
             ],
           ),
