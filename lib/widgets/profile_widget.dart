@@ -37,19 +37,22 @@ class ProfileWidget extends StatelessWidget {
   Widget buildImage(String path) {
     final image = AssetImage(path);
 
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-            image: image,
-            fit: BoxFit.cover,
-            width: 128,
-            height: 128,
-            child: InkWell(
-              onTap: onClicked,
-            )),
-      ),
-    );
+    return buildCircle(
+        color: Colors.white,
+        all: 4,
+        child: ClipOval(
+          child: Material(
+            color: Colors.transparent,
+            child: Ink.image(
+                image: image,
+                fit: BoxFit.cover,
+                width: 128,
+                height: 128,
+                child: InkWell(
+                  onTap: onClicked,
+                )),
+          ),
+        ));
   }
 
   Widget buildEditIcon(Color color) => buildCircle(
