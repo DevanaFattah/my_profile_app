@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:my_profile_app/utils/user_preferences.dart';
 import 'package:my_profile_app/models/user.dart';
 import 'package:my_profile_app/pages/profile_page.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,16 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final User user = UserPreferences.myUser;
 
-    return ThemeProvider(
-      child: Builder(
-        builder: (context) => MaterialApp(
+    return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               primaryColor: Colors.blue.shade300, dividerColor: Colors.black),
           title: title,
           home: ProfilePage(),
-        ),
-      ),
-    );
+        );
   }
 }
