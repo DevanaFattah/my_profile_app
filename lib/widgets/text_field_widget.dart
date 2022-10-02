@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatefulWidget {
   final String label;
   final String text;
-  final VoidCallback onChange;
+  final ValueChanged<String> onChanged;
   final int maxLine;
 
   const TextFieldWidget(
       {Key? key,
       required this.label,
       required this.text,
-      required this.onChange,
+      required this.onChanged,
       this.maxLine = 1})
       : super(key: key);
 
@@ -54,6 +54,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               ),
             ),
             maxLines: widget.maxLine,
+            onChanged: widget.onChanged,
           ),
         ],
       );

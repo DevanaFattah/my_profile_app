@@ -29,14 +29,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         children: [
           Column(
             children: [
-              CoverImage(),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: CoverImage(),
+              ),
               Transform.translate(
                 offset: const Offset(0, -50),
                 child: ProfileWidget(
                     imagePath: '',
                     isEdit: true,
-                    onClicked: () {
-                      Navigator.of(context).push(
+                    onClicked: () async {
+                      await Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => ProfilePage()),
                       );
                     }),
@@ -48,20 +51,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     TextFieldWidget(
                       label: 'Full name',
                       text: user.name,
-                      onChange: () async {},
+                      onChanged: (name) => user = user.clone(name: name),
                     ),
                     const SizedBox(height: 30),
                     TextFieldWidget(
                       label: 'Email',
                       text: user.email,
-                      onChange: () async {},
+                      onChanged: (email) => user = user.clone(email: email),
                     ),
                     const SizedBox(height: 30),
                     TextFieldWidget(
                       label: 'About',
                       text: user.about,
                       maxLine: 5,
-                      onChange: () async {},
+                      onChanged: (about) => user = user.clone(about: about),
+                    ),
+                    const SizedBox(height: 24),
+                    ButtonWidget(
+                      text: 'Simpan',
+                      horizontal: 185,
+                      onClicked: () {
+                        UserPreferences.setUser(user);
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
                 ),

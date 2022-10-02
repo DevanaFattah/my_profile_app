@@ -11,6 +11,8 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  await UserPreferences.init();
+
   runApp(MyApp());
 }
 
@@ -19,14 +21,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User user = UserPreferences.myUser;
+    final User user = UserPreferences.getUser();
 
     return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              primaryColor: Colors.blue.shade300, dividerColor: Colors.black),
-          title: title,
-          home: ProfilePage(),
-        );
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primaryColor: Colors.blue.shade300, dividerColor: Colors.black),
+      title: title,
+      home: ProfilePage(),
+    );
   }
 }

@@ -20,44 +20,60 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    User user = UserPreferences.myUser;
+    User user = UserPreferences.getUser();
 
     return Scaffold(
-      appBar: buildAppBar(context),
-      body: ListView(
-        physics: BouncingScrollPhysics(),
-        children: [
-          Column(
-            children: [
-              CoverImage(),
-              Transform.translate(
-                offset: const Offset(0, -50),
-                child: ProfileWidget(
-                    imagePath: '',
-                    onClicked: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditProfilePage()
-                        )
-                      );
-                    }),
-              ),
-            ],
+      appBar: buildAppBar(
+        context,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(45),
+            topRight: Radius.circular(45),
           ),
-          buildName(user),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              buildSocialButton(FontAwesomeIcons.instagram, user.instagramUrl),
-              buildSocialButton(FontAwesomeIcons.github, user.githubUrl),
-              buildSocialButton(FontAwesomeIcons.facebook, user.facebookUrl),
-            ],
-          ),
-          const SizedBox(height: 24),
-          NumbersWidget(),
-          const SizedBox(height: 48),
-          buildAbout(user),
-        ],
+        ),
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: CoverImage(),
+                ),
+                Transform.translate(
+                  offset: const Offset(0, -50),
+                  child: ProfileWidget(
+                      imagePath: '',
+                      onClicked: () async {
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => EditProfilePage(),
+                          ),
+                        );
+                        setState(() {});
+                      }),
+                ),
+              ],
+            ),
+            buildName(user),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                buildSocialButton(
+                    FontAwesomeIcons.instagram, user.instagramUrl),
+                buildSocialButton(FontAwesomeIcons.github, user.githubUrl),
+                buildSocialButton(FontAwesomeIcons.facebook, user.facebookUrl),
+              ],
+            ),
+            const SizedBox(height: 24),
+            NumbersWidget(),
+            const SizedBox(height: 48),
+            buildAbout(user),
+          ],
+        ),
       ),
     );
   }

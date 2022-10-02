@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onClicked;
+  final double horizontal;
 
   const ButtonWidget({
     Key? key,
     required this.text,
     required this.onClicked,
+    this.horizontal = 32,
   }) : super(key: key);
 
   @override
@@ -16,8 +18,8 @@ class ButtonWidget extends StatelessWidget {
       shape: StadiumBorder(),
       foregroundColor: Colors.white,
       padding: EdgeInsets.symmetric(
-        horizontal: 32,
-        vertical: 12
+        horizontal: horizontal,
+        vertical: 12,
       ),
     ),
     child: Text(text),
