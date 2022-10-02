@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile_app/pages/edit_profile_page.dart';
 import 'package:my_profile_app/widgets/appbar_widget.dart';
 import 'package:my_profile_app/utils/user_preferences.dart';
 import 'package:my_profile_app/widgets/profile_widget.dart';
@@ -19,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
+    User user = UserPreferences.myUser;
 
     return Scaffold(
       appBar: buildAppBar(context),
@@ -33,8 +34,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 offset: const Offset(0, -50),
                 child: ProfileWidget(
                     imagePath: '',
-                    onClicked: () async {}
-                  ),
+                    onClicked: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EditProfilePage()
+                        )
+                      );
+                    }),
               ),
             ],
           ),
