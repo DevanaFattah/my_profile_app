@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Transform.translate(
                   offset: const Offset(0, -50),
                   child: ProfileWidget(
-                      imagePath: '',
+                      user: user,
                       onClicked: () async {
                         await Navigator.of(context).push(
                           MaterialPageRoute(
@@ -63,9 +63,17 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 buildSocialButton(
-                    FontAwesomeIcons.instagram, user.instagramUrl),
-                buildSocialButton(FontAwesomeIcons.github, user.githubUrl),
-                buildSocialButton(FontAwesomeIcons.facebook, user.facebookUrl),
+                  FontAwesomeIcons.instagram,
+                  user.instagramUrl,
+                ),
+                buildSocialButton(
+                  FontAwesomeIcons.github,
+                  user.githubUrl,
+                ),
+                buildSocialButton(
+                  FontAwesomeIcons.facebook,
+                  user.facebookUrl,
+                ),
               ],
             ),
             const SizedBox(height: 24),

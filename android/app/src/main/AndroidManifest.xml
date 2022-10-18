@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.my_profile_app">
    <application
-        android:label="my_profile_app"
+        android:requestLegacyExternalStorage="true"
+        android:label="Profile App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

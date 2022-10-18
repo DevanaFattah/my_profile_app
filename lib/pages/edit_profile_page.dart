@@ -1,16 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_profile_app/pages/profile_page.dart';
 import 'package:my_profile_app/widgets/appbar_widget.dart';
 import 'package:my_profile_app/utils/user_preferences.dart';
 import 'package:my_profile_app/widgets/profile_widget.dart';
 import 'package:my_profile_app/widgets/button_widget.dart';
-import 'package:my_profile_app/widgets/numbers_widget.dart';
-import 'package:my_profile_app/widgets/icon_button_widget.dart';
 import 'package:my_profile_app/widgets/cover_image_widget.dart';
 import 'package:my_profile_app/models/user.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:my_profile_app/widgets/text_field_widget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -18,9 +18,18 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  late User user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = UserPreferences.getUser();
+  }
+
   @override
   Widget build(BuildContext context) {
-    User user = UserPreferences.myUser;
+    User user = UserPreferences.getUser();
 
     return Scaffold(
       appBar: buildAppBar(context),
@@ -36,12 +45,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Transform.translate(
                 offset: const Offset(0, -50),
                 child: ProfileWidget(
-                    imagePath: '',
+                    user: user,
                     isEdit: true,
                     onClicked: () async {
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
-                      );
+                      try {
+                        final image = await ImagePicker().pickImage(
+                          source: ImageSource.gallery,
+                        );
+
+                        if (image == null) return;
+
+                        final Directory directory =
+                            await getApplicationDocumentsDirectory();
+                        final name = basename(image.path);
+                        final imageFile = File('${directory.path}/$name');
+                        final newImage =
+                            await File(image.path).copy(imageFile.path);
+
+                        setState(
+                          () => user = user.clone(imagePath: newImage.path),
+                        );
+                      } catch (err) {
+                        print('err : $err');
+                      }
                     }),
               ),
               Container(
@@ -49,7 +75,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   children: [
                     TextFieldWidget(
-                      label: 'Full name',
+                      label: 'Name',
                       text: user.name,
                       onChanged: (name) => user = user.clone(name: name),
                     ),
@@ -70,6 +96,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ButtonWidget(
                       text: 'Simpan',
                       horizontal: 185,
+                      vertical: 15,
                       onClicked: () {
                         UserPreferences.setUser(user);
                         Navigator.of(context).pop();

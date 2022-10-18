@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile_app/models/user.dart';
+import 'dart:io';
 
 class ProfileWidget extends StatelessWidget {
-  final String imagePath;
+  final User user;
   final VoidCallback onClicked;
   final bool isEdit;
 
-  const ProfileWidget({
-    Key? key,
-    required this.imagePath,
-    required this.onClicked,
-    this.isEdit = false
-  }) : super(key: key);
+  const ProfileWidget(
+      {Key? key,
+      required this.user,
+      required this.onClicked,
+      this.isEdit = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +25,11 @@ class ProfileWidget extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              buildImage('assets/images/saya.jpg'),
+              buildImage(user.imagePath),
               Positioned(
                 bottom: 0,
                 right: 4,
-                child: buildEditIcon(color) ,
+                child: buildEditIcon(color),
               ),
             ],
           ),
@@ -37,7 +39,11 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage(String path) {
-    final image = AssetImage(path);
+    final image = path.contains('assets')
+        ? AssetImage(path)
+        : FileImage(
+            File(path),
+          );
 
     return buildCircle(
         color: Colors.white,
@@ -46,7 +52,7 @@ class ProfileWidget extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: Ink.image(
-                image: image,
+                image: image as ImageProvider,
                 fit: BoxFit.cover,
                 width: 128,
                 height: 128,
